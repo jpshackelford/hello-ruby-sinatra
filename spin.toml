@@ -1,0 +1,18 @@
+spin_version = "1"
+name = "hello-ruby-rest"
+version = "0.1.0"
+trigger = { type = "http", base = "/" }
+
+[[component]]
+id = "ruby"
+source = "build/hello-ruby-rest.wasm"
+
+[component.trigger]
+executor = { type = "wagi", argv = "${SCRIPT_NAME} -v /lib/env.rb ${SCRIPT_NAME} ${ARGS}" }
+route = "/hello-ruby-rest"
+
+[component.environment]
+HOME = "/"
+GEM_HOME = "/.gem"
+
+
