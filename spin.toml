@@ -4,15 +4,25 @@ version = "0.1.0"
 trigger = { type = "http", base = "/" }
 
 [[component]]
-id = "ruby"
+id = "ruby-env"
 source = "build/hello-ruby-rest.wasm"
 
 [component.trigger]
 executor = { type = "wagi", argv = "${SCRIPT_NAME} -v /lib/env.rb ${SCRIPT_NAME} ${ARGS}" }
-route = "/hello-ruby-rest"
+route = "/env/..."
 
 [component.environment]
 HOME = "/"
 GEM_HOME = "/.gem"
 
+[[component]]
+id = "ruby-rest-api"
+source = "build/hello-ruby-rest.wasm"
 
+[component.trigger]
+executor = { type = "wagi", argv = "${SCRIPT_NAME} -v /lib/sinatra_api.rb ${SCRIPT_NAME} ${ARGS}" }
+route = "/api/..."
+
+[component.environment]
+HOME = "/"
+GEM_HOME = "/.gem"

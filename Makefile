@@ -18,7 +18,9 @@ ${BUILD_DIR}/$(RUBY_FLAVOR):
 	cd ${BUILD_DIR} && tar -xf ruby-$(RUBY_FLAVOR).tar.gz
 
 ${BUILD_DIR}/.gem:
-	GEM_HOME=${BUILD_DIR}/.gem bundle install
+	mkdir -p ${BUILD_DIR}/.gem
+	GEM_HOME=${BUILD_DIR}/.gem bundle install --redownload
+	ls -lah ${BUILD_DIR}/.gem/gems
 
 .PHONY: clean
 clean:
@@ -26,4 +28,10 @@ clean:
 
 .PHONY: serve
 serve: ${BUILD_DIR}/$(RUBY_FLAVOR) ${BUILD_DIR}/.gem
-	RUST_LOG=spin=info,wagi=info spin up --file spin.toml
+	RUST_LOG=spin=trace,wagi=trace spin up --file spin.toml
+
+.PHONY: list
+list:
+	@LC_ALL=C $(MAKE) -pRrq -f $(lastword $(MAKEFILE_LIST)) : 2>/dev/null | \
+	awk -v RS= -F: '/(^|\n)# Files(\n|$$)/,/(^|\n)# Finished Make data base/ {if ($$1 !~ "^[#.]") {print $$1}}' | \
+	sort | egrep -v -e '^[^[:alnum:]]' -e '^$@$$'
