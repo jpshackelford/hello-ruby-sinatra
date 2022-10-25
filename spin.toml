@@ -1,11 +1,11 @@
 spin_version = "1"
-name = "hello-ruby-rest"
+name = "hello-ruby-sinatra"
 version = "0.1.0"
 trigger = { type = "http", base = "/" }
 
 [[component]]
 id = "ruby-env"
-source = "build/hello-ruby-rest.wasm"
+source = "build/hello-ruby-sinatra.wasm"
 
 [component.trigger]
 executor = { type = "wagi", argv = "${SCRIPT_NAME} -v /lib/env.rb ${SCRIPT_NAME} ${ARGS}" }
@@ -17,10 +17,10 @@ GEM_HOME = "/.gem"
 
 [[component]]
 id = "ruby-rest-api"
-source = "build/hello-ruby-rest.wasm"
+source = "build/hello-ruby-sinatra.wasm"
 
 [component.trigger]
-executor = { type = "wagi", argv = "${SCRIPT_NAME} -v /lib/sinatra_api.rb ${SCRIPT_NAME} ${ARGS}" }
+executor = { type = "wagi", argv = "${SCRIPT_NAME} -v /lib/sinatra_sample.rb ${SCRIPT_NAME} ${ARGS}" }
 route = "/api/..."
 
 [component.environment]

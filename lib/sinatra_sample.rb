@@ -1,6 +1,6 @@
 begin
-  require_relative "rackup_handler"
-  require_relative "sinatra_base"
+  require_relative "hacks/rackup_handler"
+  require_relative "hacks/sinatra_base"
 
   class MyApp < Sinatra::Base
     get "/" do
@@ -14,7 +14,8 @@ begin
 
   Rackup::Handler::CGI.run(MyApp.new)
 
-  #MyApp.start_server(:handler => handler, MyApp.settings, 'cgi')
+  #handler = Rackup::Handler::CGI
+  #MyApp.start_server(handler, MyApp.settings, 'cgi')
 
 rescue Exception => e
   puts "Content-Type: text/plain; charset=UTF-8"

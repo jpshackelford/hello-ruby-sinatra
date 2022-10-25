@@ -1,5 +1,5 @@
 RUBY_FLAVOR = head-wasm32-unknown-wasi-full
-BINARY = hello-ruby-rest.wasm
+BINARY = hello-ruby-sinatra.wasm
 BUILD_DIR := ./build
 
 .PHONY: build
@@ -20,7 +20,6 @@ ${BUILD_DIR}/$(RUBY_FLAVOR):
 ${BUILD_DIR}/.gem:
 	mkdir -p ${BUILD_DIR}/.gem
 	GEM_HOME=${BUILD_DIR}/.gem bundle install --redownload
-	ls -lah ${BUILD_DIR}/.gem/gems
 
 .PHONY: clean
 clean:
