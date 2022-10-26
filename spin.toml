@@ -26,3 +26,15 @@ route = "/sinatra/..."
 [component.environment]
 HOME = "/"
 GEM_HOME = "/.gem"
+
+[[component]]
+id = "sinatra-again"
+source = "build/hello-ruby-sinatra.wasm"
+
+[component.trigger]
+executor = { type = "wagi", argv = "${SCRIPT_NAME} -v /lib/sinatra_again.rb ${SCRIPT_NAME} ${ARGS}" }
+route = "/sinatra2/..."
+
+[component.environment]
+HOME = "/"
+GEM_HOME = "/.gem"
